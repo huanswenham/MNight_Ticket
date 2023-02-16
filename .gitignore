@@ -1,0 +1,17 @@
+config.txt
+
+creds.json
+
+background_pdf/
+__pycache__/
+csv_done_purchases_files/
+csv_summary/
+e-tickets/
+mnight_2022/
+qrcodes/
+sound/
+STORE_etickets/
+STORE_qrcodes/
+config.txt
+
+.DS_Store
