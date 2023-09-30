@@ -15,3 +15,5 @@ STORE_qrcodes/
 config.txt
 
 .DS_Store
+
+venv/
