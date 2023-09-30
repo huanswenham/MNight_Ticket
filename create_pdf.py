@@ -47,9 +47,16 @@ def Reformat_QR(ImageFilePath, product):
     # qr_rgb.save(ImageFilePath)
 
 
-
 def create_e_ticket(ImageFilePath, product):
     images = ADDITIANAL_IMAGES
+
+    qrcode_background_fp = os.getenv("QRCODE_PAGE_BACKGROUND_FILE_PATH", default=None)
+
+    x_scale = float(os.getenv("QRCODE_X_SIZE_SCALE", default="0"))
+    y_scale = float(os.getenv("QRCODE_Y_SIZE_SCALE", default="0"))
+    x_offset = int(os.getenv("QRCODE_X_OFFSET", default="0"))
+    y_offset = int(os.getenv("QRCODE_Y_OFFSET", default="0"))
+
     # if product == "MNight 2022 (5th March 2022)":
     #     background = Image.open("eticket_background_5th.png")
     #     w = background.size[0]
@@ -58,21 +65,24 @@ def create_e_ticket(ImageFilePath, product):
     #     background = Image.open("eticket_background_6th.png")
     #     w = background.size[0]
     #     h = background.size[1]
-    background = Image.open(os.getenv("QRCODE_PAGE_BACKGROUND_FILE_PATH", default=None))
+
+    background = Image.open(qrcode_background_fp)
     w = background.size[0]
     h = background.size[1]
 
     filehead = (ImageFilePath.split(".")[0]).split("/")[1]
 
     qr = Image.open(ImageFilePath)
-    new_qr = qr.resize((round(qr.size[0]), round(qr.size[1])))
+    new_qr = qr.resize((round(qr.size[0] * x_scale), round(qr.size[1] * y_scale)))
 
     e_ticket = Image.new('RGB', background.size, (250,250,250))
     e_ticket.paste(background, (0,0))
+
     # if product == "MNight 2022 (5th March 2022)":
     #     offset = (int(round(((w - new_qr.size[0]) / 2), 0)) + 370, int(round(((h - new_qr.size[1]) / 2),0)) + 830)
     # else:
     #     offset = (int(round(((w - new_qr.size[0]) / 2), 0)), int(round(((h - new_qr.size[1]) / 2),0)) - 400)
-    offset = (int(round(((w - new_qr.size[0]) / 2), 0)) + 170, int(round(((h - new_qr.size[1]) / 2))) + 400)
+
+    offset = (int(round(((w - new_qr.size[0]) / 2), 0)) + x_offset, int(round(((h - new_qr.size[1]) / 2))) + y_offset)
     e_ticket.paste(new_qr, offset, new_qr)
     e_ticket.save(f"e-tickets/{filehead}_eticket.pdf")
