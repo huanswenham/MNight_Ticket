@@ -1,12 +1,24 @@
+import os
 from PIL import Image
 
-COLOR = (252,233,232)
 ADDITIANAL_IMAGES = []
-BACKGROUND_PATH = ""
-# QRCODE_TITLE = "_welcome"
+
+
+def process_env_color():
+    color = os.getenv("QRCODE_BACKGROUND_RGBA_COLOR", default=None)
+    rgba_ls = color.split(" ")
+    for i, value in enumerate(rgba_ls):
+        rgba_ls[i] = int(value)
+    return tuple(rgba_ls)
 
 
 def Reformat_QR(ImageFilePath, product):
+    rgba = (255, 255, 255, 0)
+    qrcode_has_transparent_background = os.getenv("QRCODE_HAS_TRANSPARENT_BACKGROUND", default=True)
+
+    if not eval(qrcode_has_transparent_background):
+        rgba = process_env_color()
+    
     qrcode = Image.open(ImageFilePath, 'r')
     qr_rgba = qrcode.convert("RGBA")
     datas = qr_rgba.getdata()
@@ -14,12 +26,12 @@ def Reformat_QR(ImageFilePath, product):
     newData = []
     for item in datas:
         if item[0] == 255 and item[1] == 255 and item[2] == 255:
-            newData.append((255, 255, 255, 0))
+            newData.append(rgba)
         else:
             newData.append(item)
 
     qr_rgba.putdata(newData)
-    qr_rgba.save(ImageFilePath, "PNG")
+    qr_rgba.save(ImageFilePath)
     # w, h = qrcode.size
     # # if product == "MNight 2022 (5th March 2022)":
     # #     color = (255,212,232)
@@ -46,7 +58,7 @@ def create_e_ticket(ImageFilePath, product):
     #     background = Image.open("eticket_background_6th.png")
     #     w = background.size[0]
     #     h = background.size[1]
-    background = Image.open(BACKGROUND_PATH)
+    background = Image.open(os.getenv("QRCODE_PAGE_BACKGROUND_FILE_PATH", default=None))
     w = background.size[0]
     h = background.size[1]
 
