@@ -58,12 +58,15 @@ def validEnvFields():
             print(f"value for {name} not provided in .env file, please provide a value for this field.")
             return False
     
-    if not validateColorEnvField(): return False
+    if not validColorEnvField(): return False
+    if not validQRHasTransBgEnvField(): return False
+    if not validQRScaleEnvFields(): return False
+    if not validQROffsetEnvFields(): return False
 
     return True
 
 
-def validateColorEnvField():
+def validColorEnvField():
     color = os.getenv("QRCODE_BACKGROUND_RGBA_COLOR", default=None)
     rgba_ls = color.split(" ")
     
@@ -77,6 +80,37 @@ def validateColorEnvField():
             return False
     
     return True
+
+
+def validQRHasTransBgEnvField():
+    has_trans_bg = os.getenv("QRCODE_HAS_TRANSPARENT_BACKGROUND", default=None)
+    if not (has_trans_bg == "True" or has_trans_bg == "False"):
+        print(f"value for QRCODE_HAS_TRANSPARENT_BACKGROUND is either empty or not a boolean (True / False) in .env file, please provide a valid boolean.")
+        return False
+    return True
+
+
+def validQRScaleEnvFields():
+    for field in ["QRCODE_X_SIZE_SCALE", "QRCODE_Y_SIZE_SCALE"]:
+        scale = os.getenv(field, default=None)
+        try:
+            float(scale)
+        except ValueError:
+            print(f"value for {field} is either empty or not a number in .env file, please provide a valid number.")
+            return False
+    return True
+
+
+def validQROffsetEnvFields():
+    for field in ["QRCODE_X_OFFSET", "QRCODE_Y_OFFSET"]:
+        offset = os.getenv(field, default=None)
+        try:
+            int(offset)
+        except ValueError:
+            print(f"value for {field} is either empty or not a integer in .env file, please provide a valid integer.")
+            return False
+    return True
+        
 
 
 # Function to run the entire thing
