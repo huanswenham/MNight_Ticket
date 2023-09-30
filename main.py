@@ -23,12 +23,12 @@ google_sheet = None
 ENV_VAR_NULL_CHECK_LIST = [
     "OLD_CSV_FILE_PATH", 
     "NEW_CSV_FILE_PATH", 
-    "GOOGLE_SHEET_NAME", 
     "SENDER_EMAIL", 
     "SENDER_PASSWORD",
     "QRCODE_PAGE_BACKGROUND_FILE_PATH",
     "QRCODE_HAS_TRANSPARENT_BACKGROUND",
-    "QRCODE_BACKGROUND_RGBA_COLOR"
+    "QRCODE_BACKGROUND_RGBA_COLOR",
+    "GOOGLE_SHEET_NAME"
 ]
 
 GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
