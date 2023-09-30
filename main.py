@@ -1,18 +1,24 @@
 # import packages
 import os
 import qrcode
+import json
 import pandas as pd
+import gspread
+from google.oauth2.service_account import Credentials
+from dotenv import load_dotenv
+
 from create_pdf import Reformat_QR, create_e_ticket
 from embed_excel import embed_excel
 from customer import Customer
 from merge_excel import merge_excel
 from send_mail import send_mail
 from transfer_to_googlesheets import transfer
-from dotenv import load_dotenv
 
 
 customers = []
 shotcodes = []
+
+google_sheet = None
 
 ENV_VAR_NULL_CHECK_LIST = [
     "OLD_CSV_FILE_PATH", 
@@ -24,6 +30,8 @@ ENV_VAR_NULL_CHECK_LIST = [
     "QRCODE_HAS_TRANSPARENT_BACKGROUND",
     "QRCODE_BACKGROUND_RGBA_COLOR"
 ]
+
+GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 
 
 #creating the qr code as image
@@ -62,6 +70,7 @@ def validEnvFields():
     if not validQRHasTransBgEnvField(): return False
     if not validQRScaleEnvFields(): return False
     if not validQROffsetEnvFields(): return False
+    if not validGoogleSheetCredsAndEnvFields(): return False
 
     return True
 
@@ -110,7 +119,24 @@ def validQROffsetEnvFields():
             print(f"value for {field} is either empty or not a integer in .env file, please provide a valid integer.")
             return False
     return True
-        
+
+
+def validGoogleSheetCredsAndEnvFields():
+    global google_sheet
+    try:
+        # define keyfile_dict here
+        keyfile_dict = {}
+        with open("creds.json") as creds_json:
+            keyfile_dict = json.load(creds_json)
+        creds = Credentials.from_service_account_info(keyfile_dict, scopes=GOOGLE_SCOPE)
+
+        client = gspread.authorize(creds)
+
+        google_sheet = client.open(os.getenv("GOOGLE_SHEET_NAME", default="")).sheet1
+    except:
+        print(f"Error initializing Google Sheet connection, please check your creds.json and the value for GOOGLE_SHEET_NAME in .env file.")
+        return False
+    return True
 
 
 # Function to run the entire thing
@@ -141,7 +167,7 @@ def main():
         'PASSWORD': os.getenv('SENDER_PASSWORD', default=None)
     }
     send_mail(customers, config_dict)
-    transfer(customers)
+    transfer(customers, google_sheet)
 
 
 # Run entire program
