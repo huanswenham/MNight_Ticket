@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="x-apple-disable-message-reformatting">
+        <style>
+            * { 
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0 auto !important;
+                padding: 2% !important;
+                height: 100% !important;
+                max-width: 800px !important;
+            }
+
+            /* What it does: Centers email on Android 4.4 */
+            div[style*="margin: 16px 0"] {
+                margin:0 !important;
+            }
+
+            /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+            table {
+                border-spacing: 0 !important;
+                border-collapse: collapse !important;
+                table-layout: fixed !important;
+                margin: 0 auto !important;
+            }
+            table table table {
+                table-layout: auto;
+            }
+            #header{
+                width: 100%;
+            }
+            #content{
+                margin-top: 20px;
+            }
+            #container{
+                margin-right:80px;
+                margin-left:80px;
+                margin-top: 20px;
+                text-align: center;
+                border-bottom:1.5px solid grey;
+            }
+            .foot{
+                margin-top: 10px;
+                padding: 0 5% 5% 5%;
+                text-align: center;
+            }
+            .foot > p{
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 3%;
+            }
+            .foot > #insta{
+                margin-left: 3%;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .foot > #insta > a{
+                width:30px;
+                height:30px;
+            }
+
+            .foot > #insta > a > img{
+                width:30px;
+                height:30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <img src="https://uploads-ssl.webflow.com/6209197acfa7048158abee97/620933eebb1f017724ff270a_ICUMS_PRESENTS.png" alt="ICUMS Presents Epinephrine">
+        </div>
+        <div id="content">
+            <div id="greeting">Dear {name},<br><br></div>
+            
+            <div>Thank you for purchasing your ticket for Imperial MNight 2022 - Epinephrine. Your ticket is attached in this email. This ticket is valid to be scanned for <b>{quantity} time(s)</b> on the <b>{date}.</b></div>
+            <br>
+            <div>Please be reminded that you are required to show a <b>negative lfd test at the entrance prior to the show</b>. You are also required to wear a face covering throughout the performances, unless exempted.</div>
+            <br>
+            <div>Follow <a href="https://www.instagram.com/iclmnight/" target="_blank" rel="noopener noreferrer">@iclmnight</a> on Instagram to receive updates leading up to the show nights. We hope that you will enjoy the performances that our crew and members have been working on for the past few months!</div>
+            <br>
+            <div>P/S: If you are coming to support your friends, feel free to bring flowers or presents to give to them during the curtain calls at the end of the show!</div>
+            
+
+            <br>
+            <br>
+            <div id="ending">
+                <div>Kind regards</div>
+                <div>Imperial MNight 2022 Committee</div>
+                <div>Imperial College Union Malaysian Society</div>
+            </div>
+            
+            
+            
+        </div>
+        <div id="container">
+            <div id="line"></div>
+        </div>
+        <div class="foot">
+            <p>Follow our IG page for more updates</p>
+            <div id="insta">
+                <a href="https://www.instagram.com/iclmnight/" target="_blank" rel="noopener noreferrer">
+                    <img src="https://uploads-ssl.webflow.com/6209197acfa7048158abee97/620919f047f4c24e02f317f3_instagram.png" alt="instagram logo">
+                </a>
+            </div>    
+        </div>
+    </body>
+</html>
