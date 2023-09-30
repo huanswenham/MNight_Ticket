@@ -17,3 +17,5 @@ config.txt
 .DS_Store
 
 venv/
+
+.env
