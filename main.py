@@ -28,7 +28,8 @@ ENV_VAR_NULL_CHECK_LIST = [
     "QRCODE_PAGE_BACKGROUND_FILE_PATH",
     "QRCODE_HAS_TRANSPARENT_BACKGROUND",
     "QRCODE_BACKGROUND_RGBA_COLOR",
-    "GOOGLE_SHEET_NAME"
+    "GOOGLE_SHEET_NAME",
+    "EMAIL_SUBJECT"
 ]
 
 ENV_VAR_CSV_FILE_PATH_CHECK_LIST = [
@@ -203,7 +204,8 @@ def main():
     # send newly generated e-tickets via email
     config_dict = {
         'EMAIL': os.getenv('SENDER_EMAIL', default=None),
-        'PASSWORD': os.getenv('SENDER_PASSWORD', default=None)
+        'PASSWORD': os.getenv('SENDER_PASSWORD', default=None),
+        'SUBJECT': os.getenv('EMAIL_SUBJECT', default="")
     }
     send_mail(customers, config_dict)
     transfer(customers, google_sheet)
