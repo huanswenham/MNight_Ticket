@@ -31,6 +31,15 @@ ENV_VAR_NULL_CHECK_LIST = [
     "GOOGLE_SHEET_NAME"
 ]
 
+ENV_VAR_CSV_FILE_PATH_CHECK_LIST = [
+    "OLD_CSV_FILE_PATH", 
+    "NEW_CSV_FILE_PATH",
+]
+
+ENV_VAR_IMG_FILE_PATH_CHECK_LIST = [
+    "QRCODE_PAGE_BACKGROUND_FILE_PATH"
+]
+
 GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
 
 
@@ -59,6 +68,12 @@ def createQRCode(data_file, file_name_title):
         img.save(qrpath, scale="5")
 
 
+def foldersSetup():
+    for f in ["qrcodes", "e-tickets"]:
+        if not os.path.isdir(f):
+            print(f"folder {f} does not exist, creating a {f} folder...")
+            os.mkdir(f)
+
 # ENV VALUES VALIDATION
 def validEnvFields():
     for name, value in os.environ.items():
@@ -67,10 +82,11 @@ def validEnvFields():
             return False
     
     if not validColorEnvField(): return False
-    if not validQRHasTransBgEnvField(): return False
-    if not validQRScaleEnvFields(): return False
-    if not validQROffsetEnvFields(): return False
-    if not validGoogleSheetCredsAndEnvFields(): return False
+    elif not validQRHasTransBgEnvField(): return False
+    elif not validQRScaleEnvFields(): return False
+    elif not validQROffsetEnvFields(): return False
+    elif not validGoogleSheetCredsAndEnvFields(): return False
+    elif not validFilesEnvFields(): return False
 
     return True
 
@@ -139,10 +155,33 @@ def validGoogleSheetCredsAndEnvFields():
     return True
 
 
+def validFilesEnvFields():
+    for field in ENV_VAR_CSV_FILE_PATH_CHECK_LIST:
+        csv_fp = os.getenv(field, default=None)
+        if not csv_fp.split(".")[-1] == "csv":
+            print(f"value for {field} is not a valid csv file path, please provide a valid csv file path.")
+            return False
+        elif not os.path.isfile(csv_fp):
+            print(f"csv file provided for {field} is not found, please provide a valid csv file path.")
+            return False
+    
+    for field in ENV_VAR_IMG_FILE_PATH_CHECK_LIST:
+        img_fp = os.getenv(field, default=None)
+        if img_fp.split(".")[-1] not in ["jgp", "png", "jpeg"]:
+            print(f"value for {field} is not a valid image file path, please provide a valid image file path.")
+            return False
+        elif not os.path.isfile(img_fp):
+            print(f"image file provided for {field} is not found, please provide a valid image file path.")
+            return False
+    return True
+
+
+
 # Function to run the entire thing
 # Yes, THE ENTIRE THING
 def main():
     load_dotenv()
+    foldersSetup()
 
     if not validEnvFields():
         return
