@@ -32,8 +32,6 @@ Create a .env file. Below are the contents required to be filled in this file:
 OLD_CSV_FILE_PATH=
 NEW_CSV_FILE_PATH=
 FILE_NAME_TITLE=
-SENDER_EMAIL=
-SENDER_PASSWORD=
 QRCODE_PAGE_BACKGROUND_FILE_PATH=
 QRCODE_HAS_TRANSPARENT_BACKGROUND=
 QRCODE_BACKGROUND_RGBA_COLOR=
@@ -41,14 +39,15 @@ QRCODE_X_SIZE_SCALE=
 QRCODE_Y_SIZE_SCALE=
 QRCODE_X_OFFSET=
 QRCODE_Y_OFFSET=
+SENDER_EMAIL=
+SENDER_PASSWORD=
+EMAIL_SUBJECT=
 GOOGLE_SHEET_NAME=
 ```
 
 - <span style="color:#4169E1"> OLD_CSV_FILE_PATH </span>: Path to the old data csv file to cross check with the new file in order to prevent sending out e-tickets that have already been sent out before.
 - <span style="color:#4169E1"> NEW_CSV_FILE_PATH </span>: Path to the new data csv file to generate and send new e-tickets.
 - <span style="color:#4169E1"> FILE_NAME_TITLE (Optional) </span>: Name of the e-tickets will be in the format of "{login}_{FILE_NAME_TITLE}\_{order no}_eticket.pdf"
-- <span style="color:#4169E1"> SENDER_EMAIL </span>: Email that is responsible for sending the etickets.
-- <span style="color:#4169E1"> SENDER_PASSWORD </span>: Password for the email account that is responsible for sending the etickets.
 - <span style="color:#4169E1"> QRCODE_PAGE_BACKGROUND_FILE_PATH </span>: Path to pdf file for e-ticket background design.
 - <span style="color:#4169E1"> QRCODE_HAS_TRANSPARENT_BACKGROUND </span>: <span style="color:	#00FA9A">[Boolean]</span> Value will be "True" if the qrcode requires a transparent background, "False" otherwise.
 - <span style="color:#4169E1"> QRCODE_BACKGROUND_RGBA_COLOR </span>: Color in the format of "{R} {G} {B} {Alpha}" for background of qrcode (ex: 12 210 232 255).
@@ -56,6 +55,9 @@ GOOGLE_SHEET_NAME=
 - <span style="color:#4169E1"> QRCODE_Y_SIZE_SCALE </span>: <span style="color:	#00FA9A">[Float]</span> Vertical scaling for qrcode.
 - <span style="color:#4169E1"> QRCODE_X_OFFSET </span>: <span style="color:	#00FA9A">[Int]</span> Horizontal pixel offset from center.
 - <span style="color:#4169E1"> QRCODE_Y_OFFSET </span>: <span style="color:	#00FA9A">[Int]</span> Vertical pixel offset from center.
+- <span style="color:#4169E1"> SENDER_EMAIL </span>: Email that is responsible for sending the etickets.
+- <span style="color:#4169E1"> SENDER_PASSWORD </span>: Password for the email account that is responsible for sending the etickets.
+- <span style="color:#4169E1"> EMAIL_SUBJECT </span>: Subject for the email.
 - <span style="color:#4169E1"> GOOGLE_SHEET_NAME </span>: Name of the google sheet to record data.
 
 ### creds.json
