@@ -70,7 +70,7 @@ def create_e_ticket(ImageFilePath, product):
     w = background.size[0]
     h = background.size[1]
 
-    filehead = (ImageFilePath.split(".")[0]).split("/")[1]
+    filehead = (str(ImageFilePath).split(".png")[0]).split("/")[1]
 
     qr = Image.open(ImageFilePath)
     new_qr = qr.resize((round(qr.size[0] * x_scale), round(qr.size[1] * y_scale)))
