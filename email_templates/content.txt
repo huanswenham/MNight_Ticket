@@ -1,15 +1,17 @@
-Dear {name},
+<div id="greeting">Dear {name},<br><br></div>
 
-
-Thank you for purchasing your ticket for Imperial MNight 2022 - Epinephrine. This ticket is valid to be scanned for {quantity} time(s). 
-
-Please be reminded that you are required to show a negative lfd test at the entrance prior to the show, as well to as ensure that you are wearing a face covering throughout the performances, unless exempted. 
-
-Follow @iclmnight on instagram to receive updates leading up to the show nights. We hope that you will enjoy the performances that our crew and members have been working on for the past few months!
-
-p/s: If you are coming to support your friends, feel free to bring flowers or presents to give to them during the curtain calls at the end of the show :)
-
-
-Kind regards,
-Imperial MNight 2022 Committee
-Imperial College Union Malaysian Society
+<p>Thank you for purchasing your ticket for Welcome Dinner. Your ticket is attached in this email. 
+This ticket is valid to be scanned for <b>{quantity} time(s) </b> on the <b>{date}.</b></p>
+<br>
+<p>We will be having a <b>Welcome Reception</b> which will run from <b>5pm to approximately 6.30pm</b> before the dinner, 
+so we will have time to travel to Aroma Buffet together. Feel free to email events.icums@gmail.com if you have any queries.</p>
+<br>
+<p>Follow <a href="https://www.instagram.com/icu.ms/" target="_blank" rel="noopener noreferrer">@icu.ms</a> on Instagram to receive updates on future. 
+See you very soon!</p>
+<br>
+<br>
+<div id="ending"> 
+<div>Kind regards,</div>
+<div>Events Officer</div>
+<div>Imperial College Union Malaysian Society</div>
+<br>
