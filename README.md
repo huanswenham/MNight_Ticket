@@ -24,6 +24,7 @@ pip install -r requirements.txt
 A few more files would be needed to complete the setup:
 - .env
 - creds.json
+- content.txt
 
 ### .env
 Create a .env file. Copy the following into the new .env file:
@@ -100,6 +101,35 @@ Create a creds.json file. Copy the creds from google application setup into this
   "client_x509_cert_url":
 }
 ```
+
+### content.txt
+Located inside "email_templates" folder. The format for the text is heavily based on HTML. Here is an example:
+```txt
+<p>Dear {name},</p>
+<br>
+<p>Thank you for purchasing your ticket for Welcome Dinner. Your ticket is attached in this email. 
+This ticket is valid to be scanned for <b>{quantity} time(s)</b> on the <b>{date}.</b></p>
+
+<p>We will be having a <b>Welcome Reception</b> which will run from <b>5pm to approximately 6.30pm</b> before the dinner, 
+so we will have time to travel to Aroma Buffet together. Feel free to email events.icums@gmail.com if you have any queries.</p>
+
+<p>Follow <a href="https://www.instagram.com/icu.ms/" target="_blank" rel="noopener noreferrer">@icu.ms</a> on Instagram to receive updates on future. 
+See you very soon!</p>
+<br>
+<p>
+Kind regards,
+<br>
+Events Officer
+<br>
+Imperial College Union Malaysian Society
+</p>
+```
+- All new lines and tabs will be ignored, however spaces will remain.
+- Use "\<br>" tags for new lines or add more space between paragraphs.
+- Start each paragraph with "\<p>" and end them with "\</p>". They will provide some default spacing between paragraphs.
+- To bold text, place them inside "\<b>" and "\</b>" tag.
+- To make a link, use the format: \<a href="{LINK URL}" target="_blank" rel="noopener noreferrer">{TEXT FOR LINK}\</a>
+- For values to be replaced, wrap the key with curly braces (ex: {name}). Values for "name" and "quantity" keys are readily provided by this system, so just use them wherever it is required in content.txt without needing to define a value for them. Other keys will be replaced by the values defined in the json file provided at EMAIL_VALUES in .env before the email is sent.
 
 ## Usage
 Configure the values for your .env file to suite your use case. Simply run main.py to execute the program.
