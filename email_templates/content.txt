@@ -1,7 +1,7 @@
 <div id="greeting">Dear {name},<br><br></div>
 
 <p>Thank you for purchasing your ticket for Welcome Dinner. Your ticket is attached in this email. 
-This ticket is valid to be scanned for <b>{quantity} time(s) </b> on the <b>{date}.</b></p>
+This ticket is valid to be scanned for <b>{quantity} time(s)</b> on the <b>{date}.</b></p>
 <br>
 <p>We will be having a <b>Welcome Reception</b> which will run from <b>5pm to approximately 6.30pm</b> before the dinner, 
 so we will have time to travel to Aroma Buffet together. Feel free to email events.icums@gmail.com if you have any queries.</p>
@@ -10,8 +10,9 @@ so we will have time to travel to Aroma Buffet together. Feel free to email even
 See you very soon!</p>
 <br>
 <br>
-<div id="ending"> 
+<div id="ending">
 <div>Kind regards,</div>
 <div>Events Officer</div>
 <div>Imperial College Union Malaysian Society</div>
 <br>
+</div>

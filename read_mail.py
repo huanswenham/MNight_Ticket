@@ -1,10 +1,28 @@
+import re
+import json
+
+
 def read_mail(firstname, surname, quantity, product):
-    text = open("email_templates/email.html").read()
-    new_text1 = text.replace("{name}", firstname + " " + surname)
-    new_text2 = new_text1.replace("{quantity}", str(quantity))
-    new_text3 = new_text2.replace("{date}", "6th of October 2022")
-    # if product == "MNight 2022 (5th March 2022)":
-    #     new_text3 = new_text2.replace("{date}", "5th of March 2022")
-    # else:
-    #     new_text3 = new_text2.replace("{date}", "6th of March 2022")
-    return new_text3
+    replacements = compile_replacements(firstname, surname, quantity)
+    email = read_content(replacements)
+    return email
+
+
+def read_content(replacements):
+    content = open("email_templates/content.txt").read()
+    content = re.sub(r"[\n\t]*", "", content)
+    email = open("email_templates/email.html").read()
+    new_email = email.replace("{content}", content)
+
+    for tag in replacements:
+        new_email = new_email.replace("{" + tag + "}", replacements[tag])
+    return new_email
+
+
+def compile_replacements(firstname, surname, quantity):
+    replacements = {}
+    with open("email_templates/values.json") as replacements_json:
+        replacements = json.load(replacements_json)
+    replacements["name"] = firstname + " " + surname
+    replacements["quantity"] = str(quantity)
+    return replacements

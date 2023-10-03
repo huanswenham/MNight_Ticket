@@ -193,6 +193,7 @@ def validTxtFilesEnvFields():
         elif not os.path.isfile(txt_fp):
             print(f"txt file provided for {field} is not found, please provide a valid txt file path.")
             return False
+    return True
 
 # Function to run the entire thing
 # Yes, THE ENTIRE THING
