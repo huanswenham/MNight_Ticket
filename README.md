@@ -26,11 +26,14 @@ A few more files would be needed to complete the setup:
 - creds.json
 
 ### .env
-Create a .env file. Below are the contents required to be filled in this file:
+Create a .env file. Copy the following into the new .env file:
 
-```.env
+```ini
+# Purchase Order Data
 OLD_CSV_FILE_PATH=
 NEW_CSV_FILE_PATH=
+
+# E-Ticket Data
 FILE_NAME_TITLE=
 QRCODE_PAGE_BACKGROUND_FILE_PATH=
 QRCODE_HAS_TRANSPARENT_BACKGROUND=
@@ -39,26 +42,46 @@ QRCODE_X_SIZE_SCALE=
 QRCODE_Y_SIZE_SCALE=
 QRCODE_X_OFFSET=
 QRCODE_Y_OFFSET=
+
+# Email Sending Data
 SENDER_EMAIL=
 SENDER_PASSWORD=
 EMAIL_SUBJECT=
+EMAIL_TITLE_IMG=
+EMAIL_CONTENT=email_templates/content.txt  # this value shouldn't change, just change the text in content.txt
+EMAIL_VALUES=email_templates/values.json  # this value shouldn't change, just change the data in values.json
+
+# Google Sheet Record Data
 GOOGLE_SHEET_NAME=
 ```
 
+Most of these fields are required to be filled with values. Here is a detailed explaination for the functionality of all the fields and the values they require:
+
+#### 1. Purchase Order Data
 - <span style="color:#4169E1"> OLD_CSV_FILE_PATH </span>: Path to the old data csv file to cross check with the new file in order to prevent sending out e-tickets that have already been sent out before.
 - <span style="color:#4169E1"> NEW_CSV_FILE_PATH </span>: Path to the new data csv file to generate and send new e-tickets.
+
+#### 2. E-Ticket Data
 - <span style="color:#4169E1"> FILE_NAME_TITLE (Optional) </span>: Name of the e-tickets will be in the format of "{login}_{FILE_NAME_TITLE}\_{order no}_eticket.pdf"
-- <span style="color:#4169E1"> QRCODE_PAGE_BACKGROUND_FILE_PATH </span>: Path to pdf file for e-ticket background design.
+- <span style="color:#4169E1"> QRCODE_PAGE_BACKGROUND_FILE_PATH </span>: Path to image file for e-ticket background design.
 - <span style="color:#4169E1"> QRCODE_HAS_TRANSPARENT_BACKGROUND </span>: <span style="color:	#00FA9A">[Boolean]</span> Value will be "True" if the qrcode requires a transparent background, "False" otherwise.
 - <span style="color:#4169E1"> QRCODE_BACKGROUND_RGBA_COLOR </span>: Color in the format of "{R} {G} {B} {Alpha}" for background of qrcode (ex: 12 210 232 255).
 - <span style="color:#4169E1"> QRCODE_X_SIZE_SCALE </span>: <span style="color:	#00FA9A">[Float]</span> Horizontal scaling for qrcode.
 - <span style="color:#4169E1"> QRCODE_Y_SIZE_SCALE </span>: <span style="color:	#00FA9A">[Float]</span> Vertical scaling for qrcode.
 - <span style="color:#4169E1"> QRCODE_X_OFFSET </span>: <span style="color:	#00FA9A">[Int]</span> Horizontal pixel offset from center.
 - <span style="color:#4169E1"> QRCODE_Y_OFFSET </span>: <span style="color:	#00FA9A">[Int]</span> Vertical pixel offset from center.
-- <span style="color:#4169E1"> SENDER_EMAIL </span>: Email that is responsible for sending the etickets.
-- <span style="color:#4169E1"> SENDER_PASSWORD </span>: Password for the email account that is responsible for sending the etickets.
+
+#### 3. Email Sending Data
+- <span style="color:#4169E1"> SENDER_EMAIL </span>: Email that is responsible for sending the e-tickets.
+- <span style="color:#4169E1"> SENDER_PASSWORD </span>: Password for the email account that is responsible for sending the e-tickets.
 - <span style="color:#4169E1"> EMAIL_SUBJECT </span>: Subject for the email.
+- <span style="color:#4169E1"> EMAIL_TITLE_IMG </span>: Header image for email (must be in dimension 800px X 200px).
+- <span style="color:#4169E1"> EMAIL_CONTENT </span>: Path of text file for content of email (default as "email_templates/content.txt", detailed guide on text format for content.txt can be found at a later point within this document).
+- <span style="color:#4169E1"> EMAIL_VALUES </span>: Path of json file for values to be replaced in text file provided in EMAIL_CONTENT (default as "email_templates/values.json", detailed guide on json format for values.json can be found at a later point within this document).
+
+#### 4. Google Sheet Data
 - <span style="color:#4169E1"> GOOGLE_SHEET_NAME </span>: Name of the google sheet to record data.
+
 
 ### creds.json
 Create a creds.json file. Copy the creds from google application setup into this file, the format looks something like this:
