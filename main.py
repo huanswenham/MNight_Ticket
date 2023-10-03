@@ -29,7 +29,9 @@ ENV_VAR_NULL_CHECK_LIST = [
     "QRCODE_HAS_TRANSPARENT_BACKGROUND",
     "QRCODE_BACKGROUND_RGBA_COLOR",
     "GOOGLE_SHEET_NAME",
-    "EMAIL_SUBJECT"
+    "EMAIL_SUBJECT",
+    "EMAIL_TITLE_IMG",
+    "EMAIL_CONTENT"
 ]
 
 ENV_VAR_CSV_FILE_PATH_CHECK_LIST = [
@@ -39,6 +41,10 @@ ENV_VAR_CSV_FILE_PATH_CHECK_LIST = [
 
 ENV_VAR_IMG_FILE_PATH_CHECK_LIST = [
     "QRCODE_PAGE_BACKGROUND_FILE_PATH"
+]
+
+ENV_VAR_TXT_FILE_PATH_CHECK_LIST = [
+    "EMAIL_CONTENT"
 ]
 
 GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
@@ -87,7 +93,8 @@ def validEnvFields():
     elif not validQRScaleEnvFields(): return False
     elif not validQROffsetEnvFields(): return False
     elif not validGoogleSheetCredsAndEnvFields(): return False
-    elif not validFilesEnvFields(): return False
+    elif not validImgFilesEnvFields(): return False
+    elif not validTxtFilesEnvFields(): return False
 
     return True
 
@@ -156,7 +163,7 @@ def validGoogleSheetCredsAndEnvFields():
     return True
 
 
-def validFilesEnvFields():
+def validImgFilesEnvFields():
     for field in ENV_VAR_CSV_FILE_PATH_CHECK_LIST:
         csv_fp = os.getenv(field, default=None)
         if not csv_fp.split(".")[-1] == "csv":
@@ -177,6 +184,15 @@ def validFilesEnvFields():
     return True
 
 
+def validTxtFilesEnvFields():
+    for field in ENV_VAR_TXT_FILE_PATH_CHECK_LIST:
+        txt_fp = os.getenv(field, default=None)
+        if not txt_fp.split(".")[-1] == "txt":
+            print(f"value for {field} is not a valid txt file path, please provide a valid txt file path.")
+            return False
+        elif not os.path.isfile(txt_fp):
+            print(f"txt file provided for {field} is not found, please provide a valid txt file path.")
+            return False
 
 # Function to run the entire thing
 # Yes, THE ENTIRE THING
