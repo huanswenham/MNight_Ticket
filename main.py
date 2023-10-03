@@ -31,7 +31,8 @@ ENV_VAR_NULL_CHECK_LIST = [
     "GOOGLE_SHEET_NAME",
     "EMAIL_SUBJECT",
     "EMAIL_TITLE_IMG",
-    "EMAIL_CONTENT"
+    "EMAIL_CONTENT",
+    "EMAIL_VALUES"
 ]
 
 ENV_VAR_CSV_FILE_PATH_CHECK_LIST = [
@@ -45,6 +46,10 @@ ENV_VAR_IMG_FILE_PATH_CHECK_LIST = [
 
 ENV_VAR_TXT_FILE_PATH_CHECK_LIST = [
     "EMAIL_CONTENT"
+]
+
+ENV_VAR_JSON_FILE_PATH_CHECK_LIST = [
+    "EMAIL_VALUES"
 ]
 
 GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
@@ -95,6 +100,7 @@ def validEnvFields():
     elif not validGoogleSheetCredsAndEnvFields(): return False
     elif not validImgFilesEnvFields(): return False
     elif not validTxtFilesEnvFields(): return False
+    elif not validJsonFilesEnvFields(): return False
 
     return True
 
@@ -194,6 +200,20 @@ def validTxtFilesEnvFields():
             print(f"txt file provided for {field} is not found, please provide a valid txt file path.")
             return False
     return True
+
+
+def validJsonFilesEnvFields():
+    for field in ENV_VAR_JSON_FILE_PATH_CHECK_LIST:
+        json_fp = os.getenv(field, default=None)
+        if not json_fp.split(".")[-1] == "json":
+            print(f"value for {field} is not a valid json file path, please provide a valid json file path.")
+            return False
+        elif not os.path.isfile(json_fp):
+            print(f"json file provided for {field} is not found, please provide a valid json file path.")
+            return False
+    return True
+
+
 
 # Function to run the entire thing
 # Yes, THE ENTIRE THING
