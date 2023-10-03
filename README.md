@@ -25,6 +25,7 @@ A few more files would be needed to complete the setup:
 - .env
 - creds.json
 - content.txt
+- values.json
 
 ### .env
 Create a .env file. Copy the following into the new .env file:
@@ -124,12 +125,24 @@ Events Officer
 Imperial College Union Malaysian Society
 </p>
 ```
+
 - All new lines and tabs will be ignored, however spaces will remain.
 - Use "\<br>" tags for new lines or add more space between paragraphs.
 - Start each paragraph with "\<p>" and end them with "\</p>". They will provide some default spacing between paragraphs.
 - To bold text, place them inside "\<b>" and "\</b>" tag.
 - To make a link, use the format: \<a href="{LINK URL}" target="_blank" rel="noopener noreferrer">{TEXT FOR LINK}\</a>
 - For values to be replaced, wrap the key with curly braces (ex: {name}). Values for "name" and "quantity" keys are readily provided by this system, so just use them wherever it is required in content.txt without needing to define a value for them. Other keys will be replaced by the values defined in the json file provided at EMAIL_VALUES in .env before the email is sent.
+
+### values.json
+Located inside "email_templates" folder. The data is in a JSON format with every key defined mapping to a value. Example:
+```json
+{
+  "date": "6th of October 2023",
+  "event_title": "Welcome Dinner 2023"
+}
+```
+The system will find all keys in the format of {KEY} in content.txt and replace with it's corresponding value defined in this file before sending the email.
+
 
 ## Usage
 Configure the values for your .env file to suite your use case. Simply run main.py to execute the program.
