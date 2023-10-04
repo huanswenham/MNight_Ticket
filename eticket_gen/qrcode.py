@@ -1,8 +1,9 @@
 import os
 import pandas as pd
 import qrcode
+from PIL import Image
 
-from customer import Customer
+from customer.customer import Customer
 
 
 def generate_qrcodes_and_customers():
@@ -34,3 +35,33 @@ def generate_qrcodes_and_customers():
         img.save(qrpath, scale="5")
     
     return customers
+
+
+def modify_qrcode(ImageFilePath):
+    rgba = (255, 255, 255, 0)
+    qrcode_has_transparent_background = os.getenv("QRCODE_HAS_TRANSPARENT_BACKGROUND", default=True)
+
+    if not eval(qrcode_has_transparent_background):
+        rgba = _process_env_color()
+    
+    qrcode = Image.open(ImageFilePath, 'r')
+    qr_rgba = qrcode.convert("RGBA")
+    datas = qr_rgba.getdata()
+
+    newData = []
+    for item in datas:
+        if item[0] == 255 and item[1] == 255 and item[2] == 255:
+            newData.append(rgba)
+        else:
+            newData.append(item)
+
+    qr_rgba.putdata(newData)
+    qr_rgba.save(ImageFilePath)
+
+
+def _process_env_color():
+    color = os.getenv("QRCODE_BACKGROUND_RGBA_COLOR", default=None)
+    rgba_ls = color.split(" ")
+    for i, value in enumerate(rgba_ls):
+        rgba_ls[i] = int(value)
+    return tuple(rgba_ls)
