@@ -1,8 +1,8 @@
 ![Python version](https://img.shields.io/badge/python-3.11-blue)
 
-# MNight Ticket
+# Event E-Ticket System
 
-MNight Ticket is an e-ticket pdf generating and mail sending system that was initially used for Imperial College Malaysian Society MNight 2022 e-tickets, but has since been adapted for broader applications.
+Event E-Ticket System is a pdf e-ticket generating and email sending system that was initially used for Imperial College Malaysian Society MNight 2022 e-tickets, but has since been adapted for broader applications.
 
 ## Setup
 
