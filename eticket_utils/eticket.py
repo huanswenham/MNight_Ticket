@@ -1,7 +1,8 @@
 import os
 from PIL import Image
 
-from eticket_utils import pdf_csv, qrcode
+from csv_utils import pdf_csv
+from eticket_utils import qrcode
 
 
 def generate_etickets(customers):

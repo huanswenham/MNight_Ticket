@@ -1,13 +1,12 @@
-def write_new_data(customers, sheet):
-  """Writes new customers data into Google Sheet.
+def write_new_entry(customer, sheet):
+    """Writes a new customer data entry into Google Sheet.
 
-  Args:
-      customers (List[Customer]): New customers.
-      sheet (Worksheet): Google Sheet to edit.
-  """
-  for c in customers:
-      name = str(c.firstname) + " " + str(c.surname)
-      email = c.email
-      orNum = c.ordernum
-      quantity = int(c.quantity)
-      sheet.append_row([name, email, orNum, quantity, 0])
+    Args:
+        customer (Customer): New customer data to be added.
+        sheet (Worksheet): Google Sheet to edit.
+    """
+    name = str(customer.firstname) + " " + str(customer.surname)
+    email = customer.email
+    orNum = customer.ordernum
+    quantity = int(customer.quantity)
+    sheet.append_row([name, email, orNum, quantity, 0])

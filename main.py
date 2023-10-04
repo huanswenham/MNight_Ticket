@@ -7,7 +7,6 @@ from validations import validations
 from csv_utils import merge_csv
 from eticket_utils import qrcode, eticket
 from email_utils import email
-from googlesheet import googlesheet
 
 
 def main():
@@ -31,10 +30,8 @@ def main():
     eticket.generate_etickets(customers)
 
     # send newly generated e-tickets via email
-    email.send_email(customers)
+    email.send_email_and_append_gsheet(customers, google_sheet)
 
-    # write newly created customer entries into Google Sheet
-    googlesheet.write_new_data(customers, google_sheet)
 
 
 # Run entire program
