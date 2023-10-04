@@ -23,8 +23,10 @@ def main():
     google_sheet = validations.google_sheet_init()
     if not google_sheet: return
 
+    # merge data in new csv into old csv
     merge_csv.merge_to_old_csv()
 
+    # generate new qrcodes and create new customers list
     customers = qrcode.generate_qrcodes_and_customers()
 
     # generate e-tickets from customers list
