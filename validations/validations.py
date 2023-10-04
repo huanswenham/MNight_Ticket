@@ -1,6 +1,7 @@
 import os
 import json
 import gspread
+import yagmail
 from google.oauth2.service_account import Credentials
 
 
@@ -156,21 +157,42 @@ def _valid_json_files_env():
 
 
 def google_sheet_init():
-  """Initialise a Google Sheet by accessing Google account defined in creds.json.
+    """Initialise a Google Sheet by accessing Google account defined in creds.json.
 
-  Returns:
-      Worksheet: Google Sheet to be read and written into.
-  """
+    Returns:
+        Worksheet: Google Sheet to be read and written into.
+    """
 
-  try:
-      keyfile_dict = {}
-      with open("creds.json") as creds_json:
-          keyfile_dict = json.load(creds_json)
-      creds = Credentials.from_service_account_info(keyfile_dict, scopes=GOOGLE_SCOPE)
+    try:
+        keyfile_dict = {}
+        with open("creds.json") as creds_json:
+            keyfile_dict = json.load(creds_json)
+        creds = Credentials.from_service_account_info(keyfile_dict, scopes=GOOGLE_SCOPE)
 
-      client = gspread.authorize(creds)
+        client = gspread.authorize(creds)
 
-      return client.open(os.getenv("GOOGLE_SHEET_NAME", default="")).sheet1
-  except:
-      print(f"Error initializing Google Sheet connection, please check your creds.json and the value for GOOGLE_SHEET_NAME in .env file.")
-      return None
+        return client.open(os.getenv("GOOGLE_SHEET_NAME", default="")).sheet1
+    except:
+        print(f"Error initializing Google Sheet connection, please check your creds.json and the value for GOOGLE_SHEET_NAME in .env file.")
+        return None
+  
+
+def sender_gmail_init():
+    """Initialise the Gmail sender account by using SENDER_EMAIL and SENDER_PASSWORD in .env as credentials.
+
+    Returns:
+        SMTP: SMTP responsible for sending the emails.
+    """
+
+    email = os.getenv("SENDER_EMAIL", default=None)
+    pwd = os.getenv("SENDER_PASSWORD", default=None)
+    
+    try:
+        mailer = yagmail.SMTP(email, pwd)
+        mailer.send(to=email,
+        subject="Event E-Ticket System Execute Log",
+        contents="This is just an email to notify you that the event e-ticket system has successfully formed a connection with this account, as well as keeping a record on the day and time the system was ran.")
+        return mailer
+    except:
+        print(f"Error initializing Gmail account, please check your SENDER_EMAIL and SENDER_PASSWORD values in .env file.")
+        return None

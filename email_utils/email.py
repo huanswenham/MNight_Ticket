@@ -4,11 +4,8 @@ import yagmail
 from email_utils import content
 from googlesheet import googlesheet
 
-def send_email_and_append_gsheet(customers, sheet):
-    email = os.getenv('SENDER_EMAIL', default=None)
-    pwd = os.getenv('SENDER_PASSWORD', default=None)
+def send_email_and_append_gsheet(customers, mailer, sheet):
     subject = os.getenv('EMAIL_SUBJECT', default="")
-    mailer = yagmail.SMTP(email, pwd)
 
     for c in customers:
         # read content from EMAIL_CONTENT file provided and send email
@@ -36,4 +33,4 @@ def _send_email(customer, mailer, subject):
 
         print("Succesfully sent to " + customer.firstname + " " + customer.surname)
     except:
-        print("FAILED to send to " + c.firstname + " " + c.surname)
+        print("FAILED to send to " + customer.firstname + " " + customer.surname)

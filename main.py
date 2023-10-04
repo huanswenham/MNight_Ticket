@@ -17,8 +17,12 @@ def main():
     
     # input validations
     if not validations.valid_env(): return
+    # initialise Google Sheet
     google_sheet = validations.google_sheet_init()
     if not google_sheet: return
+    # initialise Gmail
+    mailer = validations.sender_gmail_init()
+    if not mailer: return
 
     # merge data in new csv into old csv
     merge_csv.merge_to_old_csv()
@@ -30,7 +34,7 @@ def main():
     eticket.generate_etickets(customers)
 
     # send newly generated e-tickets via email
-    email.send_email_and_append_gsheet(customers, google_sheet)
+    email.send_email_and_append_gsheet(customers, mailer, google_sheet)
 
 
 
