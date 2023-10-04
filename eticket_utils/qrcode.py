@@ -7,6 +7,11 @@ from customer.customer import Customer
 
 
 def generate_qrcodes_and_customers():
+    """Generates new qrcodes and creates new customers list
+
+    Returns:
+        List[Customer]: New customers for e-ticket generation.
+    """
     customers = []
 
     data_file = os.getenv("OLD_CSV_FILE_PATH", default=None)

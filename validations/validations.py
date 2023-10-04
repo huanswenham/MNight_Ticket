@@ -40,25 +40,30 @@ GOOGLE_SCOPE = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.
 
 
 
-# ENV VALUES VALIDATION
 def valid_env():
+    """Checks if all env variables are valid.
+
+    Returns:
+        boolean: Validity of env variables.
+    """
+    
     for name, value in os.environ.items():
         if not value and name in ENV_VAR_NULL_CHECK_LIST:
             print(f"value for {name} not provided in .env file, please provide a value for this field.")
             return False
     
-    if not valid_color_env(): return False
-    elif not valid_qr_has_trans_env(): return False
-    elif not valid_qr_scale_env(): return False
-    elif not valid_qr_offset_env(): return False
-    elif not valid_img_files_env(): return False
-    elif not valid_txt_files_env(): return False
-    elif not valid_json_files_env(): return False
+    if not _valid_color_env(): return False
+    elif not _valid_qr_has_trans_env(): return False
+    elif not _valid_qr_scale_env(): return False
+    elif not _valid_qr_offset_env(): return False
+    elif not _valid_img_files_env(): return False
+    elif not _valid_txt_files_env(): return False
+    elif not _valid_json_files_env(): return False
 
     return True
 
 
-def valid_color_env():
+def _valid_color_env():
     color = os.getenv("QRCODE_BACKGROUND_RGBA_COLOR", default=None)
     rgba_ls = color.split(" ")
     
@@ -74,7 +79,7 @@ def valid_color_env():
     return True
 
 
-def valid_qr_has_trans_env():
+def _valid_qr_has_trans_env():
     has_trans_bg = os.getenv("QRCODE_HAS_TRANSPARENT_BACKGROUND", default=None)
     if not (has_trans_bg == "True" or has_trans_bg == "False"):
         print(f"value for QRCODE_HAS_TRANSPARENT_BACKGROUND is either empty or not a boolean (True / False) in .env file, please provide a valid boolean.")
@@ -82,7 +87,7 @@ def valid_qr_has_trans_env():
     return True
 
 
-def valid_qr_scale_env():
+def _valid_qr_scale_env():
     for field in ["QRCODE_X_SIZE_SCALE", "QRCODE_Y_SIZE_SCALE"]:
         scale = os.getenv(field, default=None)
         try:
@@ -93,7 +98,7 @@ def valid_qr_scale_env():
     return True
 
 
-def valid_qr_offset_env():
+def _valid_qr_offset_env():
     for field in ["QRCODE_X_OFFSET", "QRCODE_Y_OFFSET"]:
         offset = os.getenv(field, default=None)
         try:
@@ -104,7 +109,7 @@ def valid_qr_offset_env():
     return True
 
 
-def valid_img_files_env():
+def _valid_img_files_env():
     for field in ENV_VAR_CSV_FILE_PATH_CHECK_LIST:
         csv_fp = os.getenv(field, default=None)
         if not csv_fp.split(".")[-1] == "csv":
@@ -125,7 +130,7 @@ def valid_img_files_env():
     return True
 
 
-def valid_txt_files_env():
+def _valid_txt_files_env():
     for field in ENV_VAR_TXT_FILE_PATH_CHECK_LIST:
         txt_fp = os.getenv(field, default=None)
         if not txt_fp.split(".")[-1] == "txt":
@@ -137,7 +142,7 @@ def valid_txt_files_env():
     return True
 
 
-def valid_json_files_env():
+def _valid_json_files_env():
     for field in ENV_VAR_JSON_FILE_PATH_CHECK_LIST:
         json_fp = os.getenv(field, default=None)
         if not json_fp.split(".")[-1] == "json":

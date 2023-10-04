@@ -5,13 +5,11 @@ from dotenv import load_dotenv
 from setup import folders
 from validations import validations
 from csv_utils import merge_csv
-from eticket_gen import qrcode, eticket
+from eticket_utils import qrcode, eticket
 from email_utils import email
 from googlesheet import googlesheet
 
 
-
-# Main
 def main():
     load_dotenv()
 

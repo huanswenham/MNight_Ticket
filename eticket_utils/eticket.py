@@ -1,10 +1,15 @@
 import os
 from PIL import Image
 
-from eticket_gen import pdf_csv, qrcode
+from eticket_utils import pdf_csv, qrcode
 
 
 def generate_etickets(customers):
+    """Generates e-tickets for list of customers provided.
+
+    Args:
+        customers (List[Customer]): New customers.
+    """
     data_file = os.getenv("OLD_CSV_FILE_PATH", default=None)
     
     for c in customers:
