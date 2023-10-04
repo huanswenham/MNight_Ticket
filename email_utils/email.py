@@ -1,14 +1,16 @@
+import os
 import yagmail
-from read_mail import read_mail
 
-def send_mail(customers, config):
-    email = config["EMAIL"]
-    pwd = config["PASSWORD"]
-    subject = config["SUBJECT"]
+from email_utils import content
+
+def send_email(customers):
+    email = os.getenv('SENDER_EMAIL', default=None)
+    pwd = os.getenv('SENDER_PASSWORD', default=None)
+    subject = os.getenv('EMAIL_SUBJECT', default="")
     mailer = yagmail.SMTP(email, pwd)
 
     for c in customers:
-        email = read_mail(c.firstname, c.surname, c.quantity, c.product)
+        email = content.compile_email_content(c.firstname, c.surname, c.quantity)
         try:
             mailer.send(to=c.email,
             subject=subject,

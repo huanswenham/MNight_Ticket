@@ -6,8 +6,8 @@ from setup import folders
 from validations import validations
 from csv_utils import merge_csv
 from eticket_gen import qrcode, eticket
-from send_mail import send_mail
-from transfer_to_googlesheets import transfer
+from email_utils import email
+from googlesheet import googlesheet
 
 
 
@@ -30,14 +30,11 @@ def main():
     # generate e-tickets from customers list
     eticket.generate_etickets(customers)
 
-    # # send newly generated e-tickets via email
-    # config_dict = {
-    #     'EMAIL': os.getenv('SENDER_EMAIL', default=None),
-    #     'PASSWORD': os.getenv('SENDER_PASSWORD', default=None),
-    #     'SUBJECT': os.getenv('EMAIL_SUBJECT', default="")
-    # }
-    # send_mail(customers, config_dict)
-    # transfer(customers, google_sheet)
+    # send newly generated e-tickets via email
+    email.send_email(customers)
+
+    # write newly created customer entries into Google Sheet
+    googlesheet.write_new_data(customers, google_sheet)
 
 
 # Run entire program
