@@ -1,4 +1,3 @@
-import os
 import yagmail
 from read_mail import read_mail
 

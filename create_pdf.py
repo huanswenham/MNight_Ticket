@@ -12,7 +12,7 @@ def process_env_color():
     return tuple(rgba_ls)
 
 
-def Reformat_QR(ImageFilePath, product):
+def Reformat_QR(ImageFilePath):
     rgba = (255, 255, 255, 0)
     qrcode_has_transparent_background = os.getenv("QRCODE_HAS_TRANSPARENT_BACKGROUND", default=True)
 
@@ -32,23 +32,10 @@ def Reformat_QR(ImageFilePath, product):
 
     qr_rgba.putdata(newData)
     qr_rgba.save(ImageFilePath)
-    # w, h = qrcode.size
-    # # if product == "MNight 2022 (5th March 2022)":
-    # #     color = (255,212,232)
-    # # else:
-    # #     color = (248,252,251)
-    # color = COLOR
-
-    # for x in range(w):
-    #     for y in range(h):
-    #         current_color = qr_rgb.getpixel((x,y))
-    #         if current_color == (255,255,255):
-    #             qr_rgb.putpixel((x,y), color)
-    # qr_rgb.save(ImageFilePath)
 
 
-def create_e_ticket(ImageFilePath, product):
-    images = ADDITIANAL_IMAGES
+def create_e_ticket(ImageFilePath):
+    # images = ADDITIANAL_IMAGES
 
     qrcode_background_fp = os.getenv("QRCODE_PAGE_BACKGROUND_FILE_PATH", default=None)
 
@@ -57,18 +44,8 @@ def create_e_ticket(ImageFilePath, product):
     x_offset = int(os.getenv("QRCODE_X_OFFSET", default="0"))
     y_offset = int(os.getenv("QRCODE_Y_OFFSET", default="0"))
 
-    # if product == "MNight 2022 (5th March 2022)":
-    #     background = Image.open("eticket_background_5th.png")
-    #     w = background.size[0]
-    #     h = background.size[1]
-    # else:
-    #     background = Image.open("eticket_background_6th.png")
-    #     w = background.size[0]
-    #     h = background.size[1]
-
     background = Image.open(qrcode_background_fp)
-    w = background.size[0]
-    h = background.size[1]
+    w, h = background.size[0], background.size[1]
 
     filehead = (str(ImageFilePath).split(".png")[0]).split("/")[1]
 
@@ -78,11 +55,6 @@ def create_e_ticket(ImageFilePath, product):
     e_ticket = Image.new('RGB', background.size, (250,250,250))
     e_ticket.paste(background, (0,0))
 
-    # if product == "MNight 2022 (5th March 2022)":
-    #     offset = (int(round(((w - new_qr.size[0]) / 2), 0)) + 370, int(round(((h - new_qr.size[1]) / 2),0)) + 830)
-    # else:
-    #     offset = (int(round(((w - new_qr.size[0]) / 2), 0)), int(round(((h - new_qr.size[1]) / 2),0)) - 400)
-
     offset = (int(round(((w - new_qr.size[0]) / 2), 0)) + x_offset, int(round(((h - new_qr.size[1]) / 2))) + y_offset)
     e_ticket.paste(new_qr, offset, new_qr)
-    e_ticket.save(f"e-tickets/{filehead}_eticket.pdf")
+    e_ticket.save(f"etickets/{filehead}_eticket.pdf")
